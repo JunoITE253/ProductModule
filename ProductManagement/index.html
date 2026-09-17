@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Luxe By EA - Product Management</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<aside class="sidebar">
+
+    <div class="brand">
+        <h1>LOVE LUXE</h1>
+        <p>BY EA • EST. 2024</p>
+    </div>
+
+    <div class="menu-title">
+        GENERAL
+    </div>
+
+    <a href="#" class="nav">
+        Dashboard
+    </a>
+
+    <div class="menu-title">
+        TEAM MODULES
+    </div>
+
+    <a href="#" class="nav">
+        New Order / POS
+        <span>−</span>
+    </a>
+
+    <a href="#" class="nav">
+        Appointments
+        <span>−</span>
+    </a>
+
+    <a href="#" class="nav">
+        Activity Logs
+        <span>−</span>
+    </a>
+
+    <a href="index.html" class="nav product-parent active">
+
+        <span>Product Management</span>
+
+        <button
+            class="menu-toggle"
+            onclick="toggleProductMenu(event)"
+        >
+            −
+        </button>
+
+    </a>
+
+    <div class="submenu" id="productMenu">
+
+        <a href="index.html" class="subnav active">
+            Add/Create Product
+        </a>
+
+        <a href="audit.html" class="subnav">
+            Product Activity Log
+        </a>
+
+        <a href="search.html" class="subnav">
+            Product Catalog
+        </a>
+
+    </div>
+
+    <a href="#" class="nav">
+        Inventory & Stock
+    </a>
+
+    <a href="#" class="nav">
+        Sales Reports
+    </a>
+
+</aside>
+
+<main class="main-content">
+
+    <div class="page-header">
+
+        <div>
+            <p class="eyebrow">PRODUCT MANAGEMENT</p>
+
+            <h2>Add / Create Product</h2>
+
+            <p class="subtitle">
+                Add and manage the product information of Love Luxe By EA.
+            </p>
+        </div>
+
+    </div>
+
+    <section class="content-grid">
+
+        <div class="form-card">
+
+            <div class="card-title">
+                <h3>Product Information</h3>
+
+                <p>
+                    Enter the details of the product.
+                </p>
+            </div>
+
+            <div class="form-group">
+
+                <label for="productCode">
+                    Product Code
+                </label>
+
+                <input
+                    type="text"
+                    id="productCode"
+                    placeholder="e.g. LL-001"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="productName">
+                    Product Name
+                </label>
+
+                <input
+                    type="text"
+                    id="productName"
+                    placeholder="Enter product name"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="category">
+                    Category
+                </label>
+
+                <select id="category">
+
+                    <option value="">
+                        Select category
+                    </option>
+
+                    <option value="Bags">
+                        Bags
+                    </option>
+
+                    <option value="Clothing">
+                        Clothing
+                    </option>
+
+                    <option value="Perfumes">
+                        Perfumes
+                    </option>
+
+                    <option value="Body Care Products">
+                        Body Care Products
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="price">
+                        Price
+                    </label>
+
+                    <input
+                        type="number"
+                        id="price"
+                        placeholder="₱0.00"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="size">
+                        Size
+                    </label>
+
+                    <input
+                        type="text"
+                        id="size"
+                        placeholder="e.g. Small / 100ml"
+                    >
+
+                </div>
+
+            </div>
+
+            <div class="form-group" id="colorGroup">
+
+                <label for="color">
+                    Color
+                </label>
+
+                <input
+                    type="text"
+                    id="color"
+                    placeholder="e.g. Black"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="productImage">
+                    Product Image
+                </label>
+
+                <label class="upload-box">
+
+                    <input
+                        type="file"
+                        id="productImage"
+                        accept="image/*"
+                    >
+
+                    <div id="uploadText">
+
+                        <span>＋</span>
+
+                        <p>
+                            Upload product image
+                        </p>
+
+                        <small>
+                            PNG, JPG or JPEG
+                        </small>
+
+                    </div>
+
+                    <img
+                        id="imagePreview"
+                        alt="Product Preview"
+                    >
+
+                </label>
+
+            </div>
+
+            <button
+                class="add-btn"
+                onclick="addProduct()"
+            >
+                Add Product
+            </button>
+
+        </div>
+
+        <div class="products-card">
+
+            <div class="products-header">
+
+                <div>
+
+                    <h3>
+                        Product List
+                    </h3>
+
+                    <p>
+                        Manage your current product records.
+                    </p>
+
+                </div>
+
+                <div class="filters">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search products or product code..."
+                        oninput="displayProducts()"
+                    >
+
+                    <select
+                        id="filterCategory"
+                        onchange="displayProducts()"
+                    >
+
+                        <option value="">
+                            All Categories
+                        </option>
+
+                        <option value="Bags">
+                            Bags
+                        </option>
+
+                        <option value="Clothing">
+                            Clothing
+                        </option>
+
+                        <option value="Perfumes">
+                            Perfumes
+                        </option>
+
+                        <option value="Body Care Products">
+                            Body Care Products
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div id="productContainer">
+
+                <div class="empty">
+                    No products found.
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>

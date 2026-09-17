@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Luxe By EA - Product Activity Log</title>
+    <link rel="stylesheet" href="audit.css">
+</head>
+<body>
+
+<aside class="sidebar">
+
+    <div class="brand">
+        <h1>LOVE LUXE</h1>
+        <p>BY EA • EST. 2024</p>
+    </div>
+
+    <div class="menu-title">
+        GENERAL
+    </div>
+
+    <a href="#" class="nav">
+        Dashboard
+    </a>
+
+    <div class="menu-title">
+        TEAM MODULES
+    </div>
+
+    <a href="#" class="nav">
+        New Order / POS
+        <span>−</span>
+    </a>
+
+    <a href="#" class="nav">
+        Appointments
+        <span>−</span>
+    </a>
+
+    <a href="#" class="nav">
+        Activity Logs
+        <span>−</span>
+    </a>
+
+    <a href="#" class="nav product-parent active" onclick="toggleProductMenu(event)">
+        Product Management
+        <span id="productArrow">−</span>
+    </a>
+
+    <div class="submenu" id="productMenu">
+
+        <a href="index.html" class="subnav">
+            Add/Create Product
+        </a>
+
+        <a href="audit.html" class="subnav active">
+            Product Activity Log
+        </a>
+
+        <a href="search.html" class="subnav">
+            Product Catalog
+        </a>
+
+    </div>
+
+    <a href="#" class="nav">
+        Inventory & Stock
+    </a>
+
+    <a href="#" class="nav">
+        Sales Reports
+    </a>
+
+</aside>
+
+
+<main class="main-content">
+
+    <div class="page-header">
+
+        <div>
+            <p class="eyebrow">PRODUCT MANAGEMENT</p>
+
+            <h2>Product Activity Log</h2>
+
+            <p class="subtitle">
+                Track the activities performed on product records.
+            </p>
+        </div>
+
+    </div>
+
+
+    <section class="summary-grid">
+
+        <div class="summary-card">
+            <p>Total Activities</p>
+            <h2 id="totalActivities">0</h2>
+            <div class="summary-line"></div>
+        </div>
+
+        <div class="summary-card">
+            <p>Products Added</p>
+            <h2 id="addedCount">0</h2>
+            <div class="summary-line"></div>
+        </div>
+
+        <div class="summary-card">
+            <p>Products Updated</p>
+            <h2 id="updatedCount">0</h2>
+            <div class="summary-line"></div>
+        </div>
+
+        <div class="summary-card">
+            <p>Products Deleted</p>
+            <h2 id="deletedCount">0</h2>
+            <div class="summary-line"></div>
+        </div>
+
+    </section>
+
+
+    <section class="audit-section">
+
+        <div class="section-header">
+
+            <div>
+                <p class="small-title">ACTIVITY RECORDS</p>
+                <h2>Product Activity History</h2>
+            </div>
+
+            <span class="record-count" id="recordCount">
+                0 Records
+            </span>
+
+        </div>
+
+
+        <div class="toolbar">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search product name or product code..."
+                oninput="displayAudit()"
+            >
+
+            <select
+                id="actionFilter"
+                onchange="displayAudit()"
+            >
+                <option value="">All Actions</option>
+                <option value="Added">Added</option>
+                <option value="Updated">Updated</option>
+                <option value="Deleted">Deleted</option>
+            </select>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>User</th>
+                        <th>Product Code</th>
+                        <th>Product Name</th>
+                        <th>Action</th>
+                        <th>Changes Made</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="auditTable"></tbody>
+
+            </table>
+
+            <div id="emptyMessage" class="empty">
+                No product activities recorded yet.
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="audit.js"></script>
+
+</body>
+</html>
