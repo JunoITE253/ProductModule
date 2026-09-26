@@ -28,6 +28,50 @@ category.addEventListener("change", function() {
     }
 });
 
+function convertToLowerCase(text) {
+    let result = "";
+
+    for (let i = 0; i < text.length; i++) {
+        let character = text[i];
+        let code = character.charCodeAt(0);
+
+        if (code >= 65 && code <= 90) {
+            character = String.fromCharCode(code + 32);
+        }
+
+        result += character;
+    }
+
+    return result;
+}
+
+function searchText(text, search) {
+    if (search === "") {
+        return true;
+    }
+
+    if (search.length > text.length) {
+        return false;
+    }
+
+    for (let i = 0; i <= text.length - search.length; i++) {
+        let match = true;
+
+        for (let j = 0; j < search.length; j++) {
+            if (text[i + j] !== search[j]) {
+                match = false;
+                break;
+            }
+        }
+
+        if (match) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 function addProduct() {
     const file = productImage.files[0];
 
@@ -62,7 +106,7 @@ function addProduct() {
         return;
     }
 
-    products.push(product);
+    products[products.length] = product;
 
     displayProducts();
 
@@ -72,96 +116,97 @@ function addProduct() {
 function displayProducts() {
     const container = document.getElementById("productContainer");
 
-    const search = document
-        .getElementById("searchInput")
-        .value
-        .toLowerCase();
+    const searchInput = document.getElementById("searchInput").value;
+    const search = convertToLowerCase(searchInput);
 
     const selectedCategory =
         document.getElementById("filterCategory").value;
 
-    const filteredProducts = products.filter(function(product) {
+    container.innerHTML = "";
+
+    let foundProducts = 0;
+
+    for (let i = 0; i < products.length; i++) {
+        const product = products[i];
+
+        const productName = convertToLowerCase(product.name);
+        const productCode = convertToLowerCase(product.code);
+
         const matchesSearch =
-            product.name.toLowerCase().includes(search) ||
-            product.code.toLowerCase().includes(search);
+            searchText(productName, search) ||
+            searchText(productCode, search);
 
         const matchesCategory =
             selectedCategory === "" ||
             product.category === selectedCategory;
 
-        return matchesSearch && matchesCategory;
-    });
+        if (matchesSearch && matchesCategory) {
+            foundProducts++;
 
-    container.innerHTML = "";
+            let details = `Size: ${product.size}`;
 
-    if (filteredProducts.length === 0) {
-        container.innerHTML = `
-            <div class="empty">
-                No products found.
-            </div>
-        `;
+            if (product.color) {
+                details += ` · Color: ${product.color}`;
+            }
 
-        return;
-    }
+            container.innerHTML += `
+                <div class="product-card">
 
-    filteredProducts.forEach(function(product) {
-        const index = products.indexOf(product);
+                    <img
+                        src="${product.image}"
+                        alt="${product.name}"
+                    >
 
-        let details = `Size: ${product.size}`;
+                    <div class="product-info">
 
-        if (product.color) {
-            details += ` · Color: ${product.color}`;
-        }
-
-        container.innerHTML += `
-            <div class="product-card">
-
-                <img
-                    src="${product.image}"
-                    alt="${product.name}"
-                >
-
-                <div class="product-info">
-
-                    <span class="product-code">
-                        ${product.code}
-                    </span>
-
-                    <h3>${product.name}</h3>
-
-                    <span class="category">
-                        ${product.category}
-                    </span>
-
-                    <p class="product-details">
-                        ${details}
-                    </p>
-
-                    <div class="product-bottom">
-
-                        <span class="price">
-                            ₱${product.price}
+                        <span class="product-code">
+                            ${product.code}
                         </span>
 
-                        <div class="actions">
+                        <h3>${product.name}</h3>
 
-                            <button onclick="editProduct(${index})">
-                                Edit
-                            </button>
+                        <span class="category">
+                            ${product.category}
+                        </span>
 
-                            <button onclick="deleteProduct(${index})">
-                                Delete
-                            </button>
+                        <p class="product-details">
+                            ${details}
+                        </p>
+
+                        <div class="product-bottom">
+
+                            <span class="price">
+                                ₱${product.price}
+                            </span>
+
+                            <div class="actions">
+
+                                <button onclick="editProduct(${i})">
+                                    Edit
+                                </button>
+
+                                <button onclick="deleteProduct(${i})">
+                                    Delete
+                                </button>
+
+                            </div>
 
                         </div>
 
                     </div>
 
                 </div>
+            `;
+        }
+    }
 
+    if (foundProducts === 0) {
+        container.innerHTML = `
+            <div class="empty">
+                No products found.
             </div>
         `;
-    });
+    }
 }
 
 function deleteProduct(index) {
@@ -172,7 +217,12 @@ function deleteProduct(index) {
     );
 
     if (confirmDelete) {
-        products.splice(index, 1);
+        for (let i = index; i < products.length - 1; i++) {
+            products[i] = products[i + 1];
+        }
+
+        products.length = products.length - 1;
+
         displayProducts();
     }
 }
@@ -240,14 +290,15 @@ function setActiveProductPage() {
         ".product-section .subnav"
     );
 
-    subnavItems.forEach(function(item) {
+    for (let i = 0; i < subnavItems.length; i++) {
+        const item = subnavItems[i];
         const page = item.getAttribute("data-page");
 
         item.classList.toggle(
             "active",
             page === currentPage
         );
-    });
+    }
 
     const productMenu = document.getElementById("productMenu");
     const productToggle = document.getElementById("productToggle");
